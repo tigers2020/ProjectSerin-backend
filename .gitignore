@@ -1,0 +1,14 @@
+# Byte-compiled / optimized files
+__pycache__/
+*.pyc
+
+# Virtual environment
+venv/
+.env/
+
+# Dependency directories
+env/
+lib/
+bin/
+
+frontend/
