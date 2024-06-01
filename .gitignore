@@ -5,10 +5,10 @@ __pycache__/
 # Virtual environment
 venv/
 .env/
-
+frontend/
 # Dependency directories
 env/
 lib/
 bin/
-
-frontend/
+/frontend/
+.env
