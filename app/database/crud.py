@@ -13,9 +13,27 @@ def get_user_by_email(db: Session, email: str):
 
 
 def create_user(db: Session, user: schemas.UserCreate):
-    hashed_password = get_password_hash(user.password)
-    db_user = models.User(name=user.name, email=user.email, hashed_password=hashed_password)
+    db_user = models.User(
+        email=user.email,
+        hashed_password=get_password_hash(user.password),
+        avatar_url=user.avatar_url,  # Add this line
+        name=user.name,
+        persona=user.persona or {}  # Handle persona being None
+    )
     db.add(db_user)
     db.commit()
     db.refresh(db_user)
     return db_user
+
+
+def update_user(db: Session, db_user: models.User, user_update: schemas.UserUpdate):
+    update_data = user_update.dict(exclude_unset=True)
+    for key, value in update_data.items():
+        if key == "persona":
+            db_user.persona.update(value)
+        else:
+            setattr(db_user, key, value)
+    db.commit()
+    db.refresh(db_user)
+    return db_user
+
